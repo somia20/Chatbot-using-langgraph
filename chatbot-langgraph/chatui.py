@@ -15,7 +15,7 @@ from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.sqlite import SqliteSaver
 import sqlite3
 import os# Import chatbot graph
-os.environ["GROQ_API_KEY"] = "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"
+os.environ["GROQ_API_KEY"] = ""
 # Initialize LLM
 llm = ChatGroq(
     model_name="llama-3.3-70b-versatile",
@@ -210,6 +210,8 @@ def campaign_manager(state: TaskState):
                         "campaign_info": campaign_info
                     }
                 else:
+                    print("Campaign Info Completed:")
+                    print(json.dumps(campaign_info.dict(), indent=4))
                     # All steps are completed - campaign is done
                     return {
                         "action": "end",
@@ -217,6 +219,7 @@ def campaign_manager(state: TaskState):
                         "campaign_info": campaign_info,
                         "output": "Great! We've completed all the steps for your campaign setup."
                     }
+                
             else:
                 # More questions needed in this step
                 current_step.status = "in_progress"
@@ -257,8 +260,8 @@ def campaign_planner(state: TaskState):
             task="Define campaign action",
             required_info=["action_type", "value", "duration"],
             validation_rules={
-                "action_type": "Must be either 'bonus' or 'discount'",
-                "value": "Must contain a positive number, even if currency symbols or names are included",
+                "action_type": "Must be either 'bonus' or 'discount',it might be in sentence",
+                "value": "Must contain a number, even if percentages, currency symbols, or names are included (e.g., 10%, $10, 10 dollars, 10 rupees)",
                 "duration": "Must be a valid duration in days"
             },
             questions={
@@ -271,7 +274,7 @@ def campaign_planner(state: TaskState):
             task="Define communication channels",
             required_info=["channels", "message_template", "frequency"],
             validation_rules={
-                "channels": "Must be one or more of: SMS, email, push, telegram",
+                "channels": "Must include word like: SMS, email, push, telegram , it might be in sentence",
                 "message_template": "Must include reward value and duration",
                 "frequency": "Must be one of: immediate, daily, weekly"
             },
@@ -285,13 +288,13 @@ def campaign_planner(state: TaskState):
             task="Define campaign schedule",
             required_info=["start_date", "end_date", "time_zone"],
             validation_rules={
-                "start_date": "Must be a future date in YYYY-MM-DD format",
-                "end_date": "Must be after start date in YYYY-MM-DD format",
+                "start_date": "can be in any date format",
+                "end_date": "can be in any date format and can be in different date format than start date",
                 "time_zone": "Must be a valid timezone identifier (e.g., UTC, America/New_York)"
             },
             questions={
-                "start_date": "When should the campaign start? (YYYY-MM-DD)",
-                "end_date": "When should the campaign end? (YYYY-MM-DD)",
+                "start_date": "When should the campaign start?",
+                "end_date": "When should the campaign end?",
                 "time_zone": "What timezone should be used for the campaign?"
             }
         )

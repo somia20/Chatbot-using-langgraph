@@ -7,11 +7,18 @@ import uvicorn
 from chatui import graph, TaskState, MemorySaver
 from datetime import datetime
 import uuid
+from typing import Union
 
 app = FastAPI()
 
 # Global state management
 conversation_states = {}
+
+class Campaign(BaseModel):
+    ruleId: str
+    campaignName: str
+    campaignType: str
+    campaignStatus: str
 
 class MessagePayload(BaseModel):
     text: str
@@ -33,18 +40,40 @@ class ChatInput(BaseModel):
     currentMessage: Message
     sender: Sender
 
+# class ResponsePayload(BaseModel):
+#     text: str
 class ResponsePayload(BaseModel):
     text: str
+    campaign: Optional[Campaign] = None  # Make campaign optiona
 
+class ResponsePayload2(BaseModel):
+    text: str
+
+# class ResponseMessage(BaseModel):
+#     messageId: str
+#     source: str = "AI"
+#     status: str = "success"
+#     messageType: str = "text"
+#     payload: ResponsePayload
 class ResponseMessage(BaseModel):
+    messageTime: str
     messageId: str
     source: str = "AI"
     status: str = "success"
     messageType: str = "text"
-    payload: ResponsePayload
+    # payload: ResponsePayload
+    payload: Union[ResponsePayload, ResponsePayload2]
+    
 
+# class ChatOutput(BaseModel):
+#     message: ResponseMessage
 class ChatOutput(BaseModel):
     message: ResponseMessage
+    sender: Sender  # Include sender information
+
+class ChatOutput2(BaseModel):
+    message: ResponseMessage
+
 
 def get_conversation_state(conversation_id: str) -> Dict:
     """Retrieve or create conversation state"""
@@ -67,34 +96,54 @@ def generate_message_id() -> str:
     """Generate a unique message ID with the required format"""
     return f"msg_{int(datetime.now().timestamp() * 1000)}"
 
-@app.post("/chat", response_model=ChatOutput)
+@app.post("/chat", response_model=Union[ChatOutput, ChatOutput2])
 async def chat(input: ChatInput):
     try:
-        # Get existing state or create new one
         current_state = get_conversation_state(input.conversationId)
-        
-        # Add new message to existing messages
         input_message = HumanMessage(content=input.currentMessage.payload.text)
         current_state["messages"].append(input_message)
-        
-        # Invoke the graph with the current state
+
         config = {"configurable": {"thread_id": input.conversationId}}
         res = graph.invoke(current_state, config)
-        
-        # Update stored state
+
         update_conversation_state(input.conversationId, res)
-        
-        # Prepare the response in the required format
-        response = ChatOutput(
-            message=ResponseMessage(
-                messageId=generate_message_id(),
-                payload=ResponsePayload(
-                    text=res.get("output", "")
+
+        response_status = "success" if res.get("status") == "completed" else "pending"
+
+        if res.get("status") == "completed":
+            return ChatOutput(
+                message=ResponseMessage(
+                    messageTime=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),  
+                    messageId=generate_message_id(),
+                    status=response_status,  # Set status dynamically
+                    payload=ResponsePayload(
+                        text=res.get("output", ""),
+                        campaign=Campaign(
+                            ruleId="70313",
+                            campaignName="Summer Promo",
+                            campaignType="advertisement",
+                            campaignStatus="pending"
+                        )
+                    )
+                ),
+                sender=input.sender  # Include sender
+            )
+        else:
+            return ChatOutput2(
+                message=ResponseMessage(
+                    messageTime=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    messageId=generate_message_id(),
+                    status=response_status,  # Set status dynamically
+                    payload=ResponsePayload2(
+                        text=res.get("output", "")
+                    )
                 )
             )
-        )
-        
-        return response
+
+            return response  # Ensure response is returned in both cases
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
