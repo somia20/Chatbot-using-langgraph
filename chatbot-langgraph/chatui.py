@@ -1,3 +1,5 @@
+# LLM Taking summary for identifying task.
+
 import json
 from typing import List, Optional, Union, Literal, Dict, Any
 from typing_extensions import TypedDict
@@ -15,7 +17,7 @@ from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.sqlite import SqliteSaver
 import sqlite3
 import os# Import chatbot graph
-os.environ["GROQ_API_KEY"] = ""
+os.environ["GROQ_API_KEY"] = "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"
 # Initialize LLM
 llm = ChatGroq(
     model_name="llama-3.3-70b-versatile",
@@ -71,6 +73,7 @@ class TaskIdentification(BaseModel):
     task_type: Literal["general_convo", "campaign_convo", "other_services"]
     description: str
 
+
 # def generate_context_summary(messages: List[HumanMessage]) -> str:
 #     """Generate a concise summary of the conversation context."""
 #     # Extract the last few messages or key points from the conversation
@@ -99,25 +102,45 @@ class TaskIdentification(BaseModel):
 #         "action": result.task_type,
 #         "output": f"Task identified as: {result.task_type}"
 #     }
-def task_identifier(state: TaskState):
-    """Identifies the type of task from user input using only the last 3 messages."""
-    structured_llm = llm.with_structured_output(TaskIdentification)
-
-    # Get the last 3 messages
-    last_3_messages = state["messages"][-3:] if state["messages"] else []
+def generate_context_summary(messages: List[HumanMessage]) -> str:
+    """Generate a concise summary of the conversation context."""
+    summary_prompt = """
+    Summarize the following conversation in a concise way, focusing on the main points and intent:
+    {conversation}
     
-    # Extract the content of the last 3 messages
-    last_3_messages_content = [msg.content for msg in last_3_messages]
+    Keep the summary under 100 words and capture the key elements of what has been discussed.
+    """
+    
+    conversation_text = "\n".join([msg.content for msg in messages])
+    response = llm.invoke(summary_prompt.format(conversation=conversation_text))
+    return response.content.strip()
 
-    # Combine the last 3 messages into a single string
-    combined_messages = "\n".join(last_3_messages_content)
-    print("combined_messages",combined_messages)
-
-    # Identify task type using only the last 3 messages
+def task_identifier(state: TaskState):
+    """Identifies the type of task from user input using full conversation with threshold-based summarization."""
+    structured_llm = llm.with_structured_output(TaskIdentification)
+    
+    # Get all messages from the conversation
+    all_messages = state["messages"] if state["messages"] else []
+    message_count = len(all_messages)
+    
+    # Set threshold for when to summarize (e.g., 10 messages)
+    SUMMARY_THRESHOLD = 10
+    
+    # Determine what to send to LLM based on threshold
+    if message_count > SUMMARY_THRESHOLD:
+        # Generate summary if conversation exceeds threshold
+        conversation_input = generate_context_summary(all_messages)
+        print(f"Conversation exceeded threshold ({SUMMARY_THRESHOLD} messages). Using summary: {conversation_input}")
+    else:
+        # Use full conversation if below threshold
+        conversation_input = "\n".join([msg.content for msg in all_messages])
+        print(f"Using full conversation ({message_count} messages): {conversation_input}")
+    
+    # Identify task type using either full conversation or summary
     result = structured_llm.invoke(
-        f"Identify if this is a campaign-related request or general conversation based on the following messages:\n{combined_messages}"
+        f"Identify if this is a campaign-related request or general conversation based on the following:\n{conversation_input}"
     )
-    print("task_identifier",result)
+    print("task_identifier result:", result)
 
     return {
         "action": result.task_type,
@@ -178,6 +201,8 @@ def campaign_manager(state: TaskState):
         if validation_result.valid:
             # Store the processed response
             current_step.collected_info[current_step.last_question] = validation_result.processed_value
+            print(f"Collected new info - {current_step.last_question}: {validation_result.processed_value}")
+            print(f"Current step collected info: {current_step.collected_info}")
 
             # Check if we have all required info for this step
             missing_info = [
@@ -258,44 +283,45 @@ def campaign_planner(state: TaskState):
         ),
         "action_type": CampaignStep(
             task="Define campaign action",
-            required_info=["action_type", "value", "duration"],
+            required_info=["action_type", "value"],
             validation_rules={
-                "action_type": "Must be either 'bonus' or 'discount',it might be in sentence",
-                "value": "Must contain a number, even if percentages, currency symbols, or names are included (e.g., 10%, $10, 10 dollars, 10 rupees)",
-                "duration": "Must be a valid duration in days"
+                "action_type": "Must be either 'bonus' or 'discount',it might be in sentence,(e.g., 10%, $10, 10 dollars, 10 rupees)",
+                "value": "Must contain a number, even if percentages, currency symbols, or names are included",
+                # "duration": "Must be a valid duration in days"
             },
             questions={
                 "action_type": "What type of reward would you like to offer? (bonus/discount)",
                 "value": "What should be the value of the reward? (Enter a number)",
-                "duration": "How many days should this reward be valid for?"
+                # "duration": "How many days should this reward be valid for?"
             }
         ),
+       
         "channel_strategy": CampaignStep(
             task="Define communication channels",
-            required_info=["channels", "message_template", "frequency"],
+            required_info=["channels",  "frequency"],
             validation_rules={
                 "channels": "Must include word like: SMS, email, push, telegram , it might be in sentence",
-                "message_template": "Must include reward value and duration",
+                # "message_template": "can be any message template in text",
                 "frequency": "Must be one of: immediate, daily, weekly"
             },
             questions={
                 "channels": "Which communication channels should be used? (SMS/email/push/telegram, can select multiple)",
-                "message_template": "What message should be sent to users? Use reward value and duration.",
+                # "message_template": "What message should be sent to users?",
                 "frequency": "How often should messages be sent? (immediate/daily/weekly)"
             }
         ),
         "scheduling": CampaignStep(
             task="Define campaign schedule",
-            required_info=["start_date", "end_date", "time_zone"],
+            required_info=["start_date", "end_date"],
             validation_rules={
-                "start_date": "can be in any date format",
-                "end_date": "can be in any date format and can be in different date format than start date",
-                "time_zone": "Must be a valid timezone identifier (e.g., UTC, America/New_York)"
+                "start_date": "can be in any date format and ordinal indicators can be used.",
+                "end_date": "can be in any date format and can be in different date format than start date and ordinal indicators can be used",
+                # "time_zone": "Must be a valid timezone identifier (e.g., UTC, America/New_York)"
             },
             questions={
                 "start_date": "When should the campaign start?",
                 "end_date": "When should the campaign end?",
-                "time_zone": "What timezone should be used for the campaign?"
+                # "time_zone": "What timezone should be used for the campaign?"
             }
         )
     }
@@ -321,6 +347,7 @@ def single_task_executor(state: TaskState):
     """Collects information for the current campaign step by generating natural questions"""
 
     campaign_info = state["campaign_info"]
+    print("campaignnn_infoooo",campaign_info)
     current_step = campaign_info.steps[campaign_info.current_step]
 
     # Get both collected and missing information
@@ -602,3 +629,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

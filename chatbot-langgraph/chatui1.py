@@ -1,3 +1,7 @@
+
+# LLM Taking last 3 messages for identifying task.
+
+
 # import json
 # from typing import List, Optional, Union, Literal, Dict, Any
 # from typing_extensions import TypedDict
@@ -15,7 +19,7 @@
 # from langgraph.checkpoint.sqlite import SqliteSaver
 # import sqlite3
 # import os# Import chatbot graph
-# os.environ["GROQ_API_KEY"] = "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"
+# os.environ["GROQ_API_KEY"] = ""
 # # Initialize LLM
 # llm = ChatGroq(
 #     model_name="llama-3.3-70b-versatile",
@@ -71,27 +75,59 @@
 #     task_type: Literal["general_convo", "campaign_convo", "other_services"]
 #     description: str
 
+# # def generate_context_summary(messages: List[HumanMessage]) -> str:
+# #     """Generate a concise summary of the conversation context."""
+# #     # Extract the last few messages or key points from the conversation
+# #     summary = ""
+# #     for message in messages[-3:]:  # Consider the last 3 messages for summary
+# #         summary += f"{message.content}\n"
+# #     return summary.strip()
 
 
 # # Node Implementations
+# # def task_identifier(state: TaskState):
+# #     """Identifies the type of task from user input"""
+# #     structured_llm = llm.with_structured_output(TaskIdentification)
+
+
+# #     # Get last message content
+# #     last_message = state["messages"]
+
+# #     # Identify task type
+# #     result = structured_llm.invoke(
+# #         f"Identify if this is a campaign-related request or general conversation: {last_message}"
+# #     )
+# #     # print("result",result)
+
+# #     return {
+# #         "action": result.task_type,
+# #         "output": f"Task identified as: {result.task_type}"
+# #     }
 # def task_identifier(state: TaskState):
-#     """Identifies the type of task from user input"""
+#     """Identifies the type of task from user input using only the last 3 messages."""
 #     structured_llm = llm.with_structured_output(TaskIdentification)
 
+#     # Get the last 3 messages
+#     last_3_messages = state["messages"][-3:] if state["messages"] else []
+    
+#     # Extract the content of the last 3 messages
+#     last_3_messages_content = [msg.content for msg in last_3_messages]
 
-#     # Get last message content
-#     last_message = state["messages"]
+#     # Combine the last 3 messages into a single string
+#     combined_messages = "\n".join(last_3_messages_content)
+#     print("combined_messages",combined_messages)
 
-#     # Identify task type
+#     # Identify task type using only the last 3 messages
 #     result = structured_llm.invoke(
-#         f"Identify if this is a campaign-related request or general conversation: {last_message}"
+#         f"Identify if this is a campaign-related request or general conversation based on the following messages:\n{combined_messages}"
 #     )
-#     # print("result",result)
+#     print("task_identifier",result)
 
 #     return {
 #         "action": result.task_type,
 #         "output": f"Task identified as: {result.task_type}"
 #     }
+
 
 # def campaign_manager(state: TaskState):
 #     """
@@ -178,6 +214,8 @@
 #                         "campaign_info": campaign_info
 #                     }
 #                 else:
+#                     print("Campaign Info Completed:")
+#                     print(json.dumps(campaign_info.dict(), indent=4))
 #                     # All steps are completed - campaign is done
 #                     return {
 #                         "action": "end",
@@ -185,6 +223,7 @@
 #                         "campaign_info": campaign_info,
 #                         "output": "Great! We've completed all the steps for your campaign setup."
 #                     }
+                
 #             else:
 #                 # More questions needed in this step
 #                 current_step.status = "in_progress"
@@ -225,8 +264,8 @@
 #             task="Define campaign action",
 #             required_info=["action_type", "value", "duration"],
 #             validation_rules={
-#                 "action_type": "Must be either 'bonus' or 'discount'",
-#                 "value": "Must contain a positive number, even if currency symbols or names are included",
+#                 "action_type": "Must be either 'bonus' or 'discount',it might be in sentence",
+#                 "value": "Must contain a number, even if percentages, currency symbols, or names are included (e.g., 10%, $10, 10 dollars, 10 rupees)",
 #                 "duration": "Must be a valid duration in days"
 #             },
 #             questions={
@@ -239,7 +278,7 @@
 #             task="Define communication channels",
 #             required_info=["channels", "message_template", "frequency"],
 #             validation_rules={
-#                 "channels": "Must be one or more of: SMS, email, push, telegram",
+#                 "channels": "Must include word like: SMS, email, push, telegram , it might be in sentence",
 #                 "message_template": "Must include reward value and duration",
 #                 "frequency": "Must be one of: immediate, daily, weekly"
 #             },
@@ -253,13 +292,13 @@
 #             task="Define campaign schedule",
 #             required_info=["start_date", "end_date", "time_zone"],
 #             validation_rules={
-#                 "start_date": "Must be a future date in YYYY-MM-DD format",
-#                 "end_date": "Must be after start date in YYYY-MM-DD format",
+#                 "start_date": "can be in any date format",
+#                 "end_date": "can be in any date format and can be in different date format than start date",
 #                 "time_zone": "Must be a valid timezone identifier (e.g., UTC, America/New_York)"
 #             },
 #             questions={
-#                 "start_date": "When should the campaign start? (YYYY-MM-DD)",
-#                 "end_date": "When should the campaign end? (YYYY-MM-DD)",
+#                 "start_date": "When should the campaign start?",
+#                 "end_date": "When should the campaign end?",
 #                 "time_zone": "What timezone should be used for the campaign?"
 #             }
 #         )
@@ -527,7 +566,7 @@
 #     # Update the state with the current conversation history
 #     current_state = st.session_state.campaign_state
 #     current_state["messages"].append(input_message)
-#     print("Current state before invoking graph:", current_state)
+#     # print("Current state before invoking graph:", current_state)
 
 #     config = {"configurable": {"thread_id": thread_id}}
 #     result = graph.invoke(current_state, config)
