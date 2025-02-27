@@ -17,7 +17,7 @@ from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.sqlite import SqliteSaver
 import sqlite3
 import os# Import chatbot graph
-os.environ["GROQ_API_KEY"] = "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"
+os.environ["GROQ_API_KEY"] = ""
 # Initialize LLM
 llm = ChatGroq(
     model_name="llama-3.3-70b-versatile",
