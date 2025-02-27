@@ -1,13 +1,12 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Union
 from langchain_core.messages import HumanMessage
 import os
 import uvicorn
 from chatui import graph, TaskState, MemorySaver
 from datetime import datetime
 import uuid
-from typing import Union
 
 app = FastAPI()
 
@@ -40,43 +39,29 @@ class ChatInput(BaseModel):
     currentMessage: Message
     sender: Sender
 
-# class ResponsePayload(BaseModel):
-#     text: str
 class ResponsePayload(BaseModel):
     text: str
-    campaign: Optional[Campaign] = None  # Make campaign optiona
+    campaign: Optional[Campaign] = None
 
 class ResponsePayload2(BaseModel):
     text: str
 
-# class ResponseMessage(BaseModel):
-#     messageId: str
-#     source: str = "AI"
-#     status: str = "success"
-#     messageType: str = "text"
-#     payload: ResponsePayload
 class ResponseMessage(BaseModel):
     messageTime: str
     messageId: str
     source: str = "AI"
     status: str = "success"
     messageType: str = "text"
-    # payload: ResponsePayload
     payload: Union[ResponsePayload, ResponsePayload2]
-    
 
-# class ChatOutput(BaseModel):
-#     message: ResponseMessage
 class ChatOutput(BaseModel):
-    message: ResponseMessage
+    currentMessage: ResponseMessage
     sender: Sender  # Include sender information
 
 class ChatOutput2(BaseModel):
-    message: ResponseMessage
-
+    currentMessage: ResponseMessage
 
 def get_conversation_state(conversation_id: str) -> Dict:
-    """Retrieve or create conversation state"""
     if conversation_id not in conversation_states:
         conversation_states[conversation_id] = {
             "conversation_id": conversation_id,
@@ -89,16 +74,25 @@ def get_conversation_state(conversation_id: str) -> Dict:
     return conversation_states[conversation_id]
 
 def update_conversation_state(conversation_id: str, new_state: Dict):
-    """Update the stored conversation state"""
     conversation_states[conversation_id] = new_state
 
-def generate_message_id() -> str:
-    """Generate a unique message ID with the required format"""
-    return f"msg_{int(datetime.now().timestamp() * 1000)}"
+
 
 @app.post("/chat", response_model=Union[ChatOutput, ChatOutput2])
-async def chat(input: ChatInput):
+async def chat(input: ChatInput, request: Request):
     try:
+        # Print the incoming request
+        print(f"Incoming Request: {await request.json()}")
+        
+        # Print the conversation ID from the incoming request
+        print(f"Conversation ID from request: {input.conversationId}")
+        
+        # Check if the conversation ID is already in use
+        if input.conversationId in conversation_states:
+            print(f"Conversation ID {input.conversationId} is already in use.")
+        else:
+            print(f"Conversation ID {input.conversationId} is new.")
+
         current_state = get_conversation_state(input.conversationId)
         input_message = HumanMessage(content=input.currentMessage.payload.text)
         current_state["messages"].append(input_message)
@@ -109,13 +103,13 @@ async def chat(input: ChatInput):
         update_conversation_state(input.conversationId, res)
 
         response_status = "success" if res.get("status") == "completed" else "pending"
-
+        print("_____________________",input.currentMessage.messageId)
         if res.get("status") == "completed":
             return ChatOutput(
-                message=ResponseMessage(
+                currentMessage=ResponseMessage(
                     messageTime=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),  
-                    messageId=generate_message_id(),
-                    status=response_status,  # Set status dynamically
+                    messageId=input.currentMessage.messageId,
+                    status=response_status,
                     payload=ResponsePayload(
                         text=res.get("output", ""),
                         campaign=Campaign(
@@ -126,31 +120,24 @@ async def chat(input: ChatInput):
                         )
                     )
                 ),
-                sender=input.sender  # Include sender
+                sender=input.sender
             )
         else:
             return ChatOutput2(
-                message=ResponseMessage(
+                currentMessage=ResponseMessage(
                     messageTime=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                    messageId=generate_message_id(),
-                    status=response_status,  # Set status dynamically
+                    messageId=input.currentMessage.messageId,
+                    status=response_status,
                     payload=ResponsePayload2(
                         text=res.get("output", "")
                     )
                 )
             )
-
-            return response  # Ensure response is returned in both cases
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.delete("/conversations/{conversation_id}")
 async def delete_conversation(conversation_id: str):
-    """Endpoint to clear a conversation's state"""
     if conversation_id in conversation_states:
         del conversation_states[conversation_id]
         return {"message": f"Conversation {conversation_id} deleted"}
@@ -158,10 +145,9 @@ async def delete_conversation(conversation_id: str):
 
 @app.get("/conversations/{conversation_id}/state")
 async def get_state(conversation_id: str):
-    """Endpoint to get current conversation state (for debugging)"""
     if conversation_id in conversation_states:
         return conversation_states[conversation_id]
     raise HTTPException(status_code=404, detail="Conversation not found")
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=9000)
