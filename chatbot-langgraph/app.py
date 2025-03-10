@@ -7,6 +7,7 @@ import uvicorn
 from chatui import graph, TaskState, MemorySaver
 from datetime import datetime
 import uuid
+import requests  # Added for sending HTTP requests
 
 app = FastAPI()
 
@@ -76,7 +77,30 @@ def get_conversation_state(conversation_id: str) -> Dict:
 def update_conversation_state(conversation_id: str, new_state: Dict):
     conversation_states[conversation_id] = new_state
 
-
+def send_campaign_to_external_api(campaign_message: str):
+    """Send the campaign message to the external API."""
+    url = "http://10.0.13.74:8004/generate"
+    payload = {
+        "featureId": "GET_SERVICE_DETAILS",
+        "appName": "CMS",
+        "username": "6D",
+        "password": "6D",
+        "reqTxnId": "100",
+        "msgOrigin": "ORI",
+        "msgDest": "DEST",
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),  # Dynamic timestamp
+        "id": "",
+        "ruletype": "",
+        "data": {
+            "ruletext": campaign_message  # Replace ruletext with the generated campaign message
+        }
+    }
+    try:
+        response = requests.post(url, json=payload)
+        response.raise_for_status()  # Raise an exception for bad status codes
+        print(f"Successfully sent campaign to {url}. Response: {response.json()}")
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to send campaign to {url}. Error: {str(e)}")
 
 @app.post("/chat", response_model=Union[ChatOutput, ChatOutput2])
 async def chat(input: ChatInput, request: Request):
@@ -103,15 +127,23 @@ async def chat(input: ChatInput, request: Request):
         update_conversation_state(input.conversationId, res)
 
         response_status = "success" if res.get("status") == "completed" else "pending"
-        print("_____________________",input.currentMessage.messageId)
+        print("_____________________", input.currentMessage.messageId)
+
         if res.get("status") == "completed":
+            # Extract the campaign message from the output
+            output_text = res.get("output", "")
+            campaign_message = output_text.split("Here’s your campaign message:")[-1].strip() if "Here’s your campaign message:" in output_text else output_text
+            
+            # Send the campaign message to the external API
+            send_campaign_to_external_api(campaign_message)
+
             return ChatOutput(
                 currentMessage=ResponseMessage(
                     messageTime=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),  
                     messageId=input.currentMessage.messageId,
                     status=response_status,
                     payload=ResponsePayload(
-                        text=res.get("output", ""),
+                        text=output_text,
                         campaign=Campaign(
                             ruleId="70313",
                             campaignName="Summer Promo",
