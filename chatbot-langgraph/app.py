@@ -16,9 +16,8 @@ conversation_states = {}
 
 class Campaign(BaseModel):
     ruleId: str
-    campaignName: str
-    campaignType: str
-    campaignStatus: str
+    rule: Dict[str, Any]
+  
 
 class MessagePayload(BaseModel):
     text: str
@@ -98,9 +97,11 @@ def send_campaign_to_external_api(campaign_message: str):
     try:
         response = requests.post(url, json=payload)
         response.raise_for_status()  # Raise an exception for bad status codes
+        return response.json()
         print(f"Successfully sent campaign to {url}. Response: {response.json()}")
     except requests.exceptions.RequestException as e:
         print(f"Failed to send campaign to {url}. Error: {str(e)}")
+        return None
 
 @app.post("/chat", response_model=Union[ChatOutput, ChatOutput2])
 async def chat(input: ChatInput, request: Request):
@@ -132,10 +133,11 @@ async def chat(input: ChatInput, request: Request):
         if res.get("status") == "completed":
             # Extract the campaign message from the output
             output_text = res.get("output", "")
-            campaign_message = output_text.split("Here’s your campaign message:")[-1].strip() if "Here’s your campaign message:" in output_text else output_text
+            campaign_message = output_text.split("Here's your campaign message:")[-1].strip() if "Here’s your campaign message:" in output_text else output_text
             
             # Send the campaign message to the external API
-            send_campaign_to_external_api(campaign_message)
+            rule = send_campaign_to_external_api(campaign_message)
+            print("_______________________",rule)
 
             return ChatOutput(
                 currentMessage=ResponseMessage(
@@ -146,9 +148,7 @@ async def chat(input: ChatInput, request: Request):
                         text=output_text,
                         campaign=Campaign(
                             ruleId="70313",
-                            campaignName="Summer Promo",
-                            campaignType="advertisement",
-                            campaignStatus="pending"
+                            rule = rule
                         )
                     )
                 ),
