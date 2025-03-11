@@ -71,7 +71,7 @@ def generate_campaign_message(campaign_info: CampaignInfo) -> str:
     Based on the following campaign details, generate a short, engaging message (2-3 sentences)
     that summarizes the campaign for the target audience. Keep it clear and appealing.
     Only use campaign details for generating message, do not add anything on your own.
-    Keep message in one line
+    Keep message in one line.
     
     {formatted_info}
     """
