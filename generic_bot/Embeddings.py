@@ -4,7 +4,7 @@ from langchain.embeddings import SentenceTransformerEmbeddings
 from langchain.vectorstores import Chroma
 
 # Load PDF document
-pdf_path = "C:/Users/somia.kumari/Downloads/Untitled document.pdf" #add your pdf path here
+pdf_path = "C:/Users/somia.kumari/Downloads/Untitled document.pdf" # add your pdf path here
 loader = PyPDFLoader(pdf_path)
 documents = loader.load()
 
