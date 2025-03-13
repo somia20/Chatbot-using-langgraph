@@ -1,0 +1,31 @@
+<!-- session.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session State</title>
+</head>
+<body>
+    <h1>Session State</h1>
+    <form id="sessionForm">
+        <label for="sessionId">Enter Conversation ID:</label>
+        <input type="text" id="sessionId" name="sessionId">
+        <button type="submit">Check State</button>
+    </form>
+    <p id="sessionState"></p>
+    <script>
+        document.getElementById('sessionForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            let sessionId = document.getElementById('sessionId').value;
+            let response = await fetch('/session_state', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({conversation_id: sessionId})
+            });
+            let data = await response.json();
+            document.getElementById('sessionState').innerText = JSON.stringify(data, null, 2);
+        });
+    </script>
+</body>
+</html>

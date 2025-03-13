@@ -1,0 +1,30 @@
+<!-- history.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversation History</title>
+</head>
+<body>
+    <h1>Conversation History</h1>
+    <label for="conversationId">Enter Conversation ID:</label>
+    <input type="text" id="conversationId">
+    <button onclick="fetchHistory()">Get History</button>
+    <ul id="history"></ul>
+    <script>
+        async function fetchHistory() {
+            let convId = document.getElementById('conversationId').value;
+            let response = await fetch(`/history/${convId}`);
+            let data = await response.json();
+            let historyList = document.getElementById('history');
+            historyList.innerHTML = '';
+            data.history.forEach(msg => {
+                let li = document.createElement('li');
+                li.textContent = msg;
+                historyList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
