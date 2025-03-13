@@ -99,7 +99,7 @@ async def handle_general_conversation(message: str) -> Dict[str, Any]:
         response = groq_client.chat.completions.create(
             model="llama3-70b-8192",
             messages=[
-                {"role": "system", "content": "You are a friendly chatbot having a professional conversation. You are a friendly chatbot who ALWAYS responds in exactly 2 sentences. Your responses must be natural, direct, and conversational. Never use disclaimers about being an AI. Never mention limitations or capabilities. Never ask more than one question back"},
+                {"role": "system", "content": "Yo are a friendly chatbot having a professional conversation. You are a friendly chatbot who ALWAYS responds in exactly 2 sentences. Your responses must be natural, direct, and conversational. Never use disclaimers about being an AI. Never mention limitations or capabilities. Never ask more than one question back"},
                 {"role": "user", "content": message}
             ],
             temperature=0.2,
