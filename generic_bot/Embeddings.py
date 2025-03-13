@@ -19,7 +19,7 @@ texts = text_splitter.split_documents(documents)
 embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 
 # Store embeddings in ChromaDB
-persist_directory = "chromaa_dbb"
+persist_directory = "chroma_db"
 chroma_db = Chroma.from_documents(
     documents=texts,
     embedding=embeddings,
