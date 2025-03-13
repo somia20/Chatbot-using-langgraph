@@ -67,7 +67,7 @@ def main():
 
 if __name__ == "__main__":
     st.set_page_config(
-        page_title="AI Chatbot Campaign",
+        page_title="AI Chatbot",
         page_icon="💬",
         layout="wide"
     )
