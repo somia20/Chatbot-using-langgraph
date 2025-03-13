@@ -35,7 +35,7 @@ class Variables():
         self.state_dict = state
 
         # Groq setup
-        GROQ_API_KEY = "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"
+        GROQ_API_KEY = ""
         self.groq_client = Groq(api_key=GROQ_API_KEY)
 
 
