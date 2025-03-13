@@ -63,6 +63,30 @@ Classification:
         print(f"Error in classify_conversation: {e}")
         return "unknown"
 
+# async def handle_general_conversation(message: str) -> Dict[str, Any]:
+#     """
+#     Generates a response for general conversation using Groq.
+#     Args:
+#         message: User's input message.
+#     Returns:
+#         Dict: Response containing message and conversation ID.
+#     """
+
+#     try:
+#         response = groq_client.chat.completions.create(
+#             model="llama3-70b-8192",
+#             prompt= """You are a friendly chatbot having a professional conversation. 
+#             You are a friendly chatbot who ALWAYS responds in exactly 2 sentences. 
+#             Your responses must be natural, direct, and conversational.
+#             Never use disclaimers about being an AI. Never mention limitations or capabilities. 
+#             Never ask more than one question back""",
+#             messages=[
+#                 {"role": "system", "content": prompt},
+#                 {"role": "user", "content": message}
+#             ],
+#             temperature=0.2,
+#             max_tokens=100
+#         )
 async def handle_general_conversation(message: str) -> Dict[str, Any]:
     """
     Generates a response for general conversation using Groq.
@@ -71,17 +95,11 @@ async def handle_general_conversation(message: str) -> Dict[str, Any]:
     Returns:
         Dict: Response containing message and conversation ID.
     """
-
     try:
         response = groq_client.chat.completions.create(
             model="llama3-70b-8192",
-            prompt= """You are a friendly chatbot having a professional conversation. 
-            You are a friendly chatbot who ALWAYS responds in exactly 2 sentences. 
-            Your responses must be natural, direct, and conversational.
-            Never use disclaimers about being an AI. Never mention limitations or capabilities. 
-            Never ask more than one question back""",
             messages=[
-                {"role": "system", "content": prompt},
+                {"role": "system", "content": "You are a friendly chatbot having a professional conversation. You are a friendly chatbot who ALWAYS responds in exactly 2 sentences. Your responses must be natural, direct, and conversational. Never use disclaimers about being an AI. Never mention limitations or capabilities. Never ask more than one question back"},
                 {"role": "user", "content": message}
             ],
             temperature=0.2,
