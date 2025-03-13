@@ -42,7 +42,7 @@ class Variables():
         # Initialize embeddings and Chroma
         self.embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
         # self.vectorstore = Chroma(persist_directory="chroma_db", embedding_function=self.embedding_function) if os.path.exists("chroma_db") else None
-        self.vectorstore = Chroma(persist_directory="chromaa_dbb", embedding_function=self.embedding_function) if os.path.exists("chroma_db") else None
+        self.vectorstore = Chroma(persist_directory="chroma_db", embedding_function=self.embedding_function) if os.path.exists("chroma_db") else None
 
     # Initialize State
     def InitiallizeState(self, session_id):
