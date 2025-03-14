@@ -83,7 +83,7 @@ def generate_context_summary(messages: List[HumanMessage]) -> str:
     summary_prompt = """
     Summarize the following conversation in a concise way, focusing on the main points and intent:
     {conversation}
-    Keep the summary under 100 words and capture the key element of what has been discussed.
+    Keep the summary under 100 words and capture the key elements of what has been discussed.
     """
     conversation_text = "\n".join([msg.content for msg in messages])
     response = llm.invoke(summary_prompt.format(conversation=conversation_text))
