@@ -558,7 +558,7 @@ def check_for_updates(state: OverallState):
     user_input = state.get("user_input", "")
     campaign_info = state["campaign_info"]
 
-    print("Checking for updates to completed campaign...")
+    print("Checking for updates to completed campaign..")
 
     # Create a structured LLM to detect update intent
     structured_llm = llm.with_structured_output(UpdateIntent)
