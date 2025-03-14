@@ -81,7 +81,7 @@ def generate_campaign_message(campaign_info: CampaignInfo) -> str:
 # Core Functions
 def generate_context_summary(messages: List[HumanMessage]) -> str:
     summary_prompt = """
-    Summariz the following conversation in a concise way, focusing on the main points and intent:
+    Summarize the following conversation in a concise way, focusing on the main points and intent:
     {conversation}
     Keep the summary under 100 words and capture the key elements of what has been discussed.
     """
