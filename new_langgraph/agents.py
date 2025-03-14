@@ -569,7 +569,7 @@ def check_for_updates(state: OverallState):
 
     "{user_input}"
 
-    Identif which aspect of the campaign they might be trying to update:
+    Identify which aspect of the campaign they might be trying to update:
     - segment: customer targeting conditions
     - action: reward type, value, or duration
     - channel: communication methods or frequency
