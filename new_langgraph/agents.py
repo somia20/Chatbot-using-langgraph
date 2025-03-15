@@ -256,7 +256,7 @@ def task_identifier(state: OverallState):
 
     # Use the conversation input (summary or full) to identify the task
     result = structured_llm.invoke(
-        f"""Identify if this is a campaign-related request or general conversation based on the following:
+        f"""Identif if this is a campaign-related request or general conversation based on the following:
 
         Conversation: {conversation_input}
 
