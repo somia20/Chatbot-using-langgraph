@@ -260,7 +260,7 @@ def task_identifier(state: OverallState):
 
         Conversation: {conversation_input}
 
-        Respond with one of:
+        Respond with one of
         - 'campaign_convo' if it's about creating a marketing campaign
         - 'general_convo' if it's just general conversation
         - 'other_services' if it's about other business services
