@@ -231,7 +231,7 @@ def generate_context_summary(messages: List[HumanMessage]) -> str:
 #     return state
 
 def task_identifier(state: OverallState):
-    """Identifies if this is a campaign request or general conversatio"""
+    """Identifies if this is a campaign request or general conversation"""
     structured_llm = llm.with_structured_output(TaskIdentification)
 
     # Ensure messages is a list, initialize if not present
