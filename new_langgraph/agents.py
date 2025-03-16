@@ -268,7 +268,7 @@ def task_identifier(state: OverallState):
         Examples:
         - "I want a campaign with a 10% discount" -> 'campaign_convo'
         - "What’s the weather like?" -> 'general_convo'
-        - "bonus" -> 'campaign_convo' (if it implies a reward in context
+        - "bonus" -> 'campaign_convo' (if it implies a reward in context)
         """
     )
 
