@@ -266,7 +266,7 @@ def task_identifier(state: OverallState):
         - 'other_services' if it's about other business services
 
         Examples:
-        - "I want a campaign with a 10% discount" -> 'campaign_convo
+        - "I want a campaign with a 10% discount" -> 'campaign_convo'
         - "What’s the weather like?" -> 'general_convo'
         - "bonus" -> 'campaign_convo' (if it implies a reward in context)
         """
