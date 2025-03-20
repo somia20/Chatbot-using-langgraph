@@ -1,0 +1,327 @@
+2025-03-19 16:45:27,375 - __main__ - INFO - Starting server on port 9000
+INFO:     Started server process [1749539]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:9000 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1749539]
+2025-03-19 16:45:53,359 - __main__ - INFO - Starting server on port 9000
+INFO:     Started server process [1749703]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:9000 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1749703]
+2025-03-19 16:46:25,906 - __main__ - INFO - Starting server on port 9000
+INFO:     Started server process [1749846]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:9000 (Press CTRL+C to quit)
+2025-03-19 16:56:26,208 - request_response_logger - INFO - Incoming request
+2025-03-19 16:56:26,209 - __main__ - INFO - Incoming request for conversation ID: conv_1742383103008
+2025-03-19 16:56:26,209 - __main__ - INFO - Creating new conversation state for ID: conv_1742383103008
+2025-03-19 16:56:27,005 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 16:56:27,298 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 16:56:27,878 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 16:56:27,879 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 16:56:27,957 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2025-03-19 16:56:27,960 - __main__ - ERROR - Error in graph execution: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01jne39k4he3e9hj0c6psbvkx8` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 100949, Requested 171. Please try again in 16m8.464999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+Task identified as: campaign_convo
+Extraction manager: Current stage is planning
+Moving from planning to collection stage
+Extracted segment data: {'segment_condition': 'ARPU less than $10 and age of network more than one year', 'confidence': 0.8}
+Extracted channel data: {'channels': '', 'frequency': '', 'confidence': 0.0}
+Extracted action data: {'action_type': '', 'reward_value': '', 'duration_days': '', 'confidence': 0.0}
+Extraction manager: Current stage is collection
+Found pending steps: ['action_type', 'channel_strategy'], moving to waiting stage
+INFO:     10.0.12.192:45572 - "POST /chat HTTP/1.1" 500 Internal Server Error
+2025-03-19 17:05:53,398 - request_response_logger - INFO - Incoming request
+2025-03-19 17:05:53,399 - __main__ - INFO - Incoming request for conversation ID: conv-2399878755677
+2025-03-19 17:05:53,399 - __main__ - INFO - Creating new conversation state for ID: conv-2399878755677
+2025-03-19 17:05:53,767 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2025-03-19 17:05:53,769 - __main__ - ERROR - Error in graph execution: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01jne39k4he3e9hj0c6psbvkx8` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 100295, Requested 88. Please try again in 5m30.941s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+INFO:     10.0.16.175:58619 - "POST /chat HTTP/1.1" 500 Internal Server Error
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1749846]
+2025-03-19 17:06:25,053 - __main__ - INFO - Starting server on port 9000
+INFO:     Started server process [1754649]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:9000 (Press CTRL+C to quit)
+2025-03-19 17:06:43,152 - request_response_logger - INFO - Incoming request
+2025-03-19 17:06:43,152 - __main__ - INFO - Incoming request for conversation ID: conv-2399878755677
+2025-03-19 17:06:43,152 - __main__ - INFO - Creating new conversation state for ID: conv-2399878755677
+2025-03-19 17:06:43,730 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:06:44,058 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:06:44,059 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:06:44,459 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:06:44,700 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:06:44,705 - __main__ - INFO - Graph execution completed for conversation ID: conv-2399878755677
+2025-03-19 17:06:44,705 - __main__ - INFO - Updated state for conversation ID: conv-2399878755677
+2025-03-19 17:06:44,705 - __main__ - INFO - Extracted output text: Who would you like to target with this campaign, what reward would you like to offer, and how would ...
+/opt/campaign_manager/chatapp.py:300: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.10/migration/
+  log_response(input.conversationId, final_response.dict())
+2025-03-19 17:06:44,706 - request_response_logger - INFO - Outgoing response
+2025-03-19 17:06:44,706 - __main__ - INFO - Request processed in 1.55 seconds
+Task identified as: general_convo
+Extraction manager: Current stage is planning
+Moving from planning to collection stage
+Extracted action data: {'action_type': '', 'reward_value': '', 'duration_days': '', 'confidence': 0.0}
+Extracted channel data: {'channels': '', 'frequency': '', 'confidence': 0.0}
+Extracted segment data: {'segment_condition': '', 'confidence': 0.0}
+Extraction manager: Current stage is collection
+Found pending steps: ['segment_definition', 'action_type', 'channel_strategy'], moving to waiting stage
+INFO:     10.0.16.175:58654 - "POST /chat HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1754649]
+2025-03-19 17:07:04,175 - __main__ - INFO - Starting server on port 9000
+INFO:     Started server process [1754840]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:9000 (Press CTRL+C to quit)
+2025-03-19 17:09:06,709 - request_response_logger - INFO - Incoming request
+2025-03-19 17:09:06,709 - __main__ - INFO - Incoming request for conversation ID: conv_1742383863597
+2025-03-19 17:09:06,709 - __main__ - INFO - Creating new conversation state for ID: conv_1742383863597
+2025-03-19 17:09:07,130 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:09:07,445 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:09:07,465 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:09:07,479 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:09:07,733 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:09:07,738 - __main__ - INFO - Graph execution completed for conversation ID: conv_1742383863597
+2025-03-19 17:09:07,738 - __main__ - INFO - Updated state for conversation ID: conv_1742383863597
+2025-03-19 17:09:07,738 - __main__ - INFO - Extracted output text: What reward would you like to offer and how would you like to communicate with customers?...
+/opt/campaign_manager/chatapp.py:300: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.10/migration/
+  log_response(input.conversationId, final_response.dict())
+2025-03-19 17:09:07,738 - request_response_logger - INFO - Outgoing response
+2025-03-19 17:09:07,738 - __main__ - INFO - Request processed in 1.03 seconds
+Task identified as: campaign_convo
+Extraction manager: Current stage is planning
+Moving from planning to collection stage
+Extracted segment data: {'segment_condition': 'ARPU less than $10 and age of network more', 'confidence': 0.8}
+Extracted channel data: {'channels': '', 'frequency': '', 'confidence': 0.0}
+Extracted action data: {'action_type': '', 'reward_value': '', 'duration_days': '', 'confidence': 0.0}
+Extraction manager: Current stage is collection
+Found pending steps: ['action_type', 'channel_strategy'], moving to waiting stage
+INFO:     10.0.12.192:46038 - "POST /chat HTTP/1.1" 200 OK
+2025-03-19 17:09:42,509 - request_response_logger - INFO - Incoming request
+2025-03-19 17:09:42,509 - __main__ - INFO - Incoming request for conversation ID: conv_1742383863597
+2025-03-19 17:09:42,509 - __main__ - INFO - Using existing conversation state for ID: conv_1742383863597
+2025-03-19 17:09:43,115 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:09:43,539 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:09:43,545 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:09:47,955 - __main__ - INFO - Graph execution completed for conversation ID: conv_1742383863597
+2025-03-19 17:09:47,955 - __main__ - INFO - Updated state for conversation ID: conv_1742383863597
+2025-03-19 17:09:47,955 - __main__ - INFO - Extracted output text: Please provide a name for your campaign....
+2025-03-19 17:09:47,955 - __main__ - INFO - Found rule_response in campaign_manager_state
+2025-03-19 17:09:47,955 - __main__ - INFO - Found campaign_name in campaign_manager_state: None
+2025-03-19 17:09:47,955 - __main__ - INFO - Found launch_campaign in campaign_manager_state: false
+/opt/campaign_manager/chatapp.py:300: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.10/migration/
+  log_response(input.conversationId, final_response.dict())
+2025-03-19 17:09:47,956 - request_response_logger - INFO - Outgoing response
+2025-03-19 17:09:47,956 - __main__ - INFO - Request processed in 5.45 seconds
+Task identified as: general_convo
+Extraction manager: Current stage is waiting
+Processing follow-up response, moving back to collection stage
+Extracted action data: {'action_type': 'data product', 'reward_value': '1GB', 'duration_days': '1', 'confidence': 0.8}
+Extracted channel data: {'channels': 'SMS', 'frequency': '', 'confidence': 0.8}
+Extraction manager: Current stage is collection
+All steps complete, moving to completed stage
+Entering campaign manager
+Current campaign manager stage: rule_service
+Entering rule_service stage
+Calling rule service with rule text: ARPU less than $10 and age of network more will receive data product of 1GB for 1 days
+Rule service API call successful. Moving to campaign name stage.
+INFO:     10.0.12.192:46082 - "POST /chat HTTP/1.1" 200 OK
+2025-03-19 17:10:08,595 - request_response_logger - INFO - Incoming request
+2025-03-19 17:10:08,595 - __main__ - INFO - Incoming request for conversation ID: conv_1742383863597
+2025-03-19 17:10:08,595 - __main__ - INFO - Using existing conversation state for ID: conv_1742383863597
+2025-03-19 17:10:08,917 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:10:09,205 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:10:09,227 - __main__ - INFO - Graph execution completed for conversation ID: conv_1742383863597
+2025-03-19 17:10:09,228 - __main__ - INFO - Updated state for conversation ID: conv_1742383863597
+2025-03-19 17:10:09,228 - __main__ - INFO - Extracted output text:  when you want to launch? provide start date and end date ...
+2025-03-19 17:10:09,228 - __main__ - INFO - Found rule_response in campaign_manager_state
+2025-03-19 17:10:09,228 - __main__ - INFO - Found campaign_name in campaign_manager_state: Test March 24
+2025-03-19 17:10:09,228 - __main__ - INFO - Found launch_campaign in campaign_manager_state: false
+/opt/campaign_manager/chatapp.py:300: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.10/migration/
+  log_response(input.conversationId, final_response.dict())
+2025-03-19 17:10:09,228 - request_response_logger - INFO - Outgoing response
+2025-03-19 17:10:09,229 - __main__ - INFO - Request processed in 0.63 seconds
+Task identified as: campaign_convo
+Extraction manager: Current stage is completed
+All steps complete, moving to completed stage
+Entering campaign manager
+Current campaign manager stage: campaign_name
+Entering campaign name stage
+INFO:     10.0.12.192:46090 - "POST /chat HTTP/1.1" 200 OK
+2025-03-19 17:10:33,847 - request_response_logger - INFO - Incoming request
+2025-03-19 17:10:33,848 - __main__ - INFO - Incoming request for conversation ID: conv_1742383863597
+2025-03-19 17:10:33,848 - __main__ - INFO - Using existing conversation state for ID: conv_1742383863597
+2025-03-19 17:10:34,277 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:10:34,548 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:10:34,803 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:10:34,820 - __main__ - INFO - Graph execution completed for conversation ID: conv_1742383863597
+2025-03-19 17:10:34,820 - __main__ - INFO - Updated state for conversation ID: conv_1742383863597
+2025-03-19 17:10:34,820 - __main__ - INFO - Extracted output text: Great! Your campaign "Test March 24" is scheduled from 2025-03-20 to 2025-03-30.Please confirm if th...
+2025-03-19 17:10:34,820 - __main__ - INFO - Found rule_response in campaign_manager_state
+2025-03-19 17:10:34,820 - __main__ - INFO - Found campaign_name in campaign_manager_state: Test March 24
+2025-03-19 17:10:34,820 - __main__ - INFO - Found launch_campaign in campaign_manager_state: false
+/opt/campaign_manager/chatapp.py:300: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.10/migration/
+  log_response(input.conversationId, final_response.dict())
+2025-03-19 17:10:34,820 - request_response_logger - INFO - Outgoing response
+2025-03-19 17:10:34,821 - __main__ - INFO - Request processed in 0.97 seconds
+Task identified as: campaign_convo
+Extraction manager: Current stage is completed
+All steps complete, moving to completed stage
+Entering campaign manager
+Current campaign manager stage: campaign_name
+INFO:     10.0.12.192:46116 - "POST /chat HTTP/1.1" 200 OK
+2025-03-19 17:11:04,840 - request_response_logger - INFO - Incoming request
+2025-03-19 17:11:04,840 - __main__ - INFO - Incoming request for conversation ID: conv_1742383863597
+2025-03-19 17:11:04,840 - __main__ - INFO - Using existing conversation state for ID: conv_1742383863597
+2025-03-19 17:11:05,166 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:11:05,720 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 17:11:05,770 - __main__ - INFO - Graph execution completed for conversation ID: conv_1742383863597
+2025-03-19 17:11:05,771 - __main__ - INFO - Updated state for conversation ID: conv_1742383863597
+2025-03-19 17:11:05,771 - __main__ - INFO - Extracted output text: Campaign 'Test March 24' has been created successfully...
+2025-03-19 17:11:05,771 - __main__ - INFO - Found rule_response in campaign_manager_state
+2025-03-19 17:11:05,771 - __main__ - INFO - Found campaign_name in campaign_manager_state: Test March 24
+2025-03-19 17:11:05,771 - __main__ - INFO - Found launch_campaign in campaign_manager_state: true
+/opt/campaign_manager/chatapp.py:300: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.10/migration/
+  log_response(input.conversationId, final_response.dict())
+2025-03-19 17:11:05,771 - request_response_logger - INFO - Outgoing response
+2025-03-19 17:11:05,771 - __main__ - INFO - Request processed in 0.93 seconds
+Task identified as: campaign_convo
+Extraction manager: Current stage is completed
+All steps complete, moving to completed stage
+Entering campaign manager
+Current campaign manager stage: finalize
+final payload sending 
+INFO:     10.0.12.192:46126 - "POST /chat HTTP/1.1" 200 OK
+2025-03-19 18:02:54,935 - request_response_logger - INFO - Incoming request
+2025-03-19 18:02:54,936 - __main__ - INFO - Incoming request for conversation ID: conv_1742387091811
+2025-03-19 18:02:54,936 - __main__ - INFO - Creating new conversation state for ID: conv_1742387091811
+2025-03-19 18:03:00,346 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 18:03:01,401 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 18:03:01,406 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 18:03:01,452 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 18:03:01,822 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 18:03:01,827 - __main__ - INFO - Graph execution completed for conversation ID: conv_1742387091811
+2025-03-19 18:03:01,827 - __main__ - INFO - Updated state for conversation ID: conv_1742387091811
+2025-03-19 18:03:01,827 - __main__ - INFO - Extracted output text: What reward would you like to offer and how would you like to communicate with customers?...
+/opt/campaign_manager/chatapp.py:300: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.10/migration/
+  log_response(input.conversationId, final_response.dict())
+2025-03-19 18:03:01,827 - request_response_logger - INFO - Outgoing response
+2025-03-19 18:03:01,827 - __main__ - INFO - Request processed in 6.89 seconds
+Task identified as: campaign_convo
+Extraction manager: Current stage is planning
+Moving from planning to collection stage
+Extracted segment data: {'segment_condition': 'ARPU less than $10 and age of network more', 'confidence': 0.8}
+Extracted action data: {'action_type': '', 'reward_value': '', 'duration_days': '', 'confidence': 0.0}
+Extracted channel data: {'channels': '', 'frequency': '', 'confidence': 0.0}
+Extraction manager: Current stage is collection
+Found pending steps: ['action_type', 'channel_strategy'], moving to waiting stage
+INFO:     10.0.12.192:47972 - "POST /chat HTTP/1.1" 200 OK
+2025-03-19 18:03:23,239 - request_response_logger - INFO - Incoming request
+2025-03-19 18:03:23,240 - __main__ - INFO - Incoming request for conversation ID: conv_1742387091811
+2025-03-19 18:03:23,240 - __main__ - INFO - Using existing conversation state for ID: conv_1742387091811
+2025-03-19 18:03:23,613 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 18:03:23,946 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 18:03:24,011 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 18:03:29,579 - __main__ - INFO - Graph execution completed for conversation ID: conv_1742387091811
+2025-03-19 18:03:29,579 - __main__ - INFO - Updated state for conversation ID: conv_1742387091811
+2025-03-19 18:03:29,579 - __main__ - INFO - Extracted output text: Please provide a name for your campaign....
+2025-03-19 18:03:29,579 - __main__ - INFO - Found rule_response in campaign_manager_state
+2025-03-19 18:03:29,579 - __main__ - INFO - Found campaign_name in campaign_manager_state: None
+2025-03-19 18:03:29,579 - __main__ - INFO - Found launch_campaign in campaign_manager_state: false
+/opt/campaign_manager/chatapp.py:300: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.10/migration/
+  log_response(input.conversationId, final_response.dict())
+2025-03-19 18:03:29,580 - request_response_logger - INFO - Outgoing response
+2025-03-19 18:03:29,580 - __main__ - INFO - Request processed in 6.34 seconds
+Task identified as: general_convo
+Extraction manager: Current stage is waiting
+Processing follow-up response, moving back to collection stage
+Extracted channel data: {'channels': 'SMS', 'frequency': '', 'confidence': 0.8}
+Extracted action data: {'action_type': 'data product', 'reward_value': '1GB', 'duration_days': '1', 'confidence': 0.8}
+Extraction manager: Current stage is collection
+All steps complete, moving to completed stage
+Entering campaign manager
+Current campaign manager stage: rule_service
+Entering rule_service stage
+Calling rule service with rule text: ARPU less than $10 and age of network more will receive data product of 1GB for 1 days
+Rule service API call successful. Moving to campaign name stage.
+INFO:     10.0.12.192:48008 - "POST /chat HTTP/1.1" 200 OK
+2025-03-19 18:03:46,374 - request_response_logger - INFO - Incoming request
+2025-03-19 18:03:46,375 - __main__ - INFO - Incoming request for conversation ID: conv_1742387091811
+2025-03-19 18:03:46,375 - __main__ - INFO - Using existing conversation state for ID: conv_1742387091811
+2025-03-19 18:03:46,780 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 18:03:47,143 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 18:03:47,167 - __main__ - INFO - Graph execution completed for conversation ID: conv_1742387091811
+2025-03-19 18:03:47,168 - __main__ - INFO - Updated state for conversation ID: conv_1742387091811
+2025-03-19 18:03:47,168 - __main__ - INFO - Extracted output text:  when you want to launch? provide start date and end date ...
+2025-03-19 18:03:47,168 - __main__ - INFO - Found rule_response in campaign_manager_state
+2025-03-19 18:03:47,168 - __main__ - INFO - Found campaign_name in campaign_manager_state: Test of March 25
+2025-03-19 18:03:47,168 - __main__ - INFO - Found launch_campaign in campaign_manager_state: false
+/opt/campaign_manager/chatapp.py:300: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.10/migration/
+  log_response(input.conversationId, final_response.dict())
+2025-03-19 18:03:47,169 - request_response_logger - INFO - Outgoing response
+2025-03-19 18:03:47,170 - __main__ - INFO - Request processed in 0.80 seconds
+Task identified as: campaign_convo
+Extraction manager: Current stage is completed
+All steps complete, moving to completed stage
+Entering campaign manager
+Current campaign manager stage: campaign_name
+Entering campaign name stage
+INFO:     10.0.12.192:48016 - "POST /chat HTTP/1.1" 200 OK
+2025-03-19 18:04:07,464 - request_response_logger - INFO - Incoming request
+2025-03-19 18:04:07,465 - __main__ - INFO - Incoming request for conversation ID: conv_1742387091811
+2025-03-19 18:04:07,466 - __main__ - INFO - Using existing conversation state for ID: conv_1742387091811
+2025-03-19 18:04:07,937 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 18:04:08,297 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 18:04:08,568 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 18:04:08,584 - __main__ - INFO - Graph execution completed for conversation ID: conv_1742387091811
+2025-03-19 18:04:08,584 - __main__ - INFO - Updated state for conversation ID: conv_1742387091811
+2025-03-19 18:04:08,584 - __main__ - INFO - Extracted output text: Great! Your campaign "Test of March 25" is scheduled from 2025-03-20 to 2025-03-25.Please confirm if...
+2025-03-19 18:04:08,584 - __main__ - INFO - Found rule_response in campaign_manager_state
+2025-03-19 18:04:08,584 - __main__ - INFO - Found campaign_name in campaign_manager_state: Test of March 25
+2025-03-19 18:04:08,584 - __main__ - INFO - Found launch_campaign in campaign_manager_state: false
+/opt/campaign_manager/chatapp.py:300: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.10/migration/
+  log_response(input.conversationId, final_response.dict())
+2025-03-19 18:04:08,585 - request_response_logger - INFO - Outgoing response
+2025-03-19 18:04:08,585 - __main__ - INFO - Request processed in 1.12 seconds
+Task identified as: campaign_convo
+Extraction manager: Current stage is completed
+All steps complete, moving to completed stage
+Entering campaign manager
+Current campaign manager stage: campaign_name
+INFO:     10.0.12.192:48026 - "POST /chat HTTP/1.1" 200 OK
+2025-03-19 18:04:34,421 - request_response_logger - INFO - Incoming request
+2025-03-19 18:04:34,421 - __main__ - INFO - Incoming request for conversation ID: conv_1742387091811
+2025-03-19 18:04:34,422 - __main__ - INFO - Using existing conversation state for ID: conv_1742387091811
+2025-03-19 18:04:35,290 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 18:04:35,927 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-03-19 18:04:35,992 - __main__ - INFO - Graph execution completed for conversation ID: conv_1742387091811
+2025-03-19 18:04:35,992 - __main__ - INFO - Updated state for conversation ID: conv_1742387091811
+2025-03-19 18:04:35,992 - __main__ - INFO - Extracted output text: Campaign 'Test of March 25' has been created successfully...
+2025-03-19 18:04:35,992 - __main__ - INFO - Found rule_response in campaign_manager_state
+2025-03-19 18:04:35,992 - __main__ - INFO - Found campaign_name in campaign_manager_state: Test of March 25
+2025-03-19 18:04:35,992 - __main__ - INFO - Found launch_campaign in campaign_manager_state: true
+/opt/campaign_manager/chatapp.py:300: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.10/migration/
+  log_response(input.conversationId, final_response.dict())
+2025-03-19 18:04:35,992 - request_response_logger - INFO - Outgoing response
+2025-03-19 18:04:35,993 - __main__ - INFO - Request processed in 1.57 seconds
+Task identified as: campaign_convo
+Extraction manager: Current stage is completed
+All steps complete, moving to completed stage
+Entering campaign manager
+Current campaign manager stage: finalize
+final payload sending 
+INFO:     10.0.12.192:48052 - "POST /chat HTTP/1.1" 200 OK
