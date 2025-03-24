@@ -135,7 +135,7 @@ class Agent_RAG(Variables):
     - initially keep all the value of all fields as false.
     - Only set a field to true if it is explicitly mentioned in the user input otherwise set every field to false
     - Extract all possible fields required for the action.
-    - Only extract those fields which are required for the action
+    - Only extract those fields which are required for the action.
 
     Context Information:
     {context_str}
