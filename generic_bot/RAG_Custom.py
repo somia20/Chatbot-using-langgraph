@@ -134,7 +134,7 @@ class Agent_RAG(Variables):
         user_prompt = f"""Extract the main action and fields from this request.
     - initially keep all the value of all fields as false.
     - Only set a field to true if it is explicitly mentioned in the user input otherwise set every field to false.
-    - xtract all possible fields required for the action.
+    - Extract all possible fields required for the action.
     - Only extract those fields which are required for the action.
 
     Context Information:
